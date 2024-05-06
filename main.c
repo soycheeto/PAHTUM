@@ -3,6 +3,26 @@
 //Function Declarations
 #define SIZE 7
 
+
+void initializeBoard(char board[SIZE][SIZE]){
+    int i, j;
+    for(i=0; i<SIZE; i++){
+        for(j=0; j<SIZE; j++){
+            board[i][j] = ' ';
+        }
+    }
+}
+
+void printBoard(char board[SIZE][SIZE]){
+    int i, j;
+    for(i=0; i<SIZE; i++){
+        for(j=0; j<SIZE; j++){
+            printf("%c", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 int playMove(char board[SIZE][SIZE], char player, int *x, int *y){
     int validMove=1;
     printf("Player %c move:\n", player);
@@ -21,26 +41,6 @@ int playMove(char board[SIZE][SIZE], char player, int *x, int *y){
     return validMove;
 
 }
-
-initializeBoard(char board[SIZE][SIZE]){
-    int i, j;
-    for(i=0; i<SIZE; i++){
-        for(j=0; j<SIZE; j++){
-            board[i][j] = ' ';
-        }
-    }
-}
-
-printBoard(char board[SIZE][SIZE]){
-    int i, j;
-    for(i=0; i<SIZE; i++){
-        for(j=0; j<SIZE; j++){
-            printf("%c", board[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 
 scoreBoard(char board[SIZE][SIZE], int countX[SIZE], int countO[SIZE]);
 printScores(char board[SIZE][SIZE]);
