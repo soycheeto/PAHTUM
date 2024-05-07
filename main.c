@@ -85,35 +85,62 @@ void playMove(char board[SIZE][SIZE], char player, int *x, int *y) {
     }
 
     // Check if the player is close to winning and block them
+        // Check if the player is close to winning and block them
     char opponent = (player == 'X') ? 'O' : 'X';
     for (row = 0; row < SIZE; row++) {
         for (col = 0; col < SIZE; col++) {
             if (isValidMove(board, row, col)) {
                 board[row][col] = opponent; // Simulate opponent's move
-                int countX[5], countO[5];
-                scoreBoard(board, countX, countO);
-                if (opponent == 'X' && 
-                    ((col > 1 && board[row][col - 1] == ' ') || // Check left
-                     (col < SIZE - 2 && board[row][col + 1] == ' ') || // Check right
-                     (row > 1 && board[row - 1][col] == ' ') || // Check up
-                     (row < SIZE - 2 && board[row + 1][col] == ' '))) { // Check down
-                    *x = row;
-                    *y = col;
-                    board[row][col] = ' '; // Undo the simulation
-                    return;
-                } else if (opponent == 'O' && 
-                           ((col > 1 && board[row][col - 1] == ' ') || // Check left
-                            (col < SIZE - 2 && board[row][col + 1] == ' ') || // Check right
-                            (row > 1 && board[row - 1][col] == ' ') || // Check up
-                            (row < SIZE - 2 && board[row + 1][col] == ' '))) { // Check down
-                    *x = row;
-                    *y = col;
-                    return;
+
+                // Check horizontally
+                int horizontalSequence = 0;
+                for (int i = -1; i <= 1; i++) {
+                    if (col + i >= 0 && col + i < SIZE && board[row][col + i] == opponent) {
+                        horizontalSequence++;
+                    }
                 }
+                if (horizontalSequence >= 2) {
+                    // Check for empty cells to block
+                    if (col > 0 && board[row][col - 1] == ' ') { // Check left
+                        *x = row;
+                        *y = col - 1;
+                        board[row][col] = ' '; // Undo the simulation
+                        return;
+                    } else if (col < SIZE - 1 && board[row][col + 1] == ' ') { // Check right
+                        *x = row;
+                        *y = col + 1;
+                        board[row][col] = ' '; // Undo the simulation
+                        return;
+                    }
+                }
+
+                // Check vertically
+                int verticalSequence = 0;
+                for (int i = -1; i <= 1; i++) {
+                    if (row + i >= 0 && row + i < SIZE && board[row + i][col] == opponent) {
+                        verticalSequence++;
+                    }
+                }
+                if (verticalSequence >= 2) {
+                    // Check for empty cells to block
+                    if (row > 0 && board[row - 1][col] == ' ') { // Check up
+                        *x = row - 1;
+                        *y = col;
+                        board[row][col] = ' '; // Undo the simulation
+                        return;
+                    } else if (row < SIZE - 1 && board[row + 1][col] == ' ') { // Check down
+                        *x = row + 1;
+                        *y = col;
+                        board[row][col] = ' '; // Undo the simulation
+                        return;
+                    }
+                }
+
                 board[row][col] = ' '; // Undo the simulation
             }
         }
     }
+
 
     // If no winning or blocking moves with at least 2 empty cells around, make a random move
     do {
