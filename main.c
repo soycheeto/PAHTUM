@@ -51,6 +51,42 @@ void playMove(char board[SIZE][SIZE], char player, int *x, int *y) {
             //offense
     }
 
+    void simulateOffense(char board[SIZE][SIZE], char player, int* x, int* y) {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                if (isValidMove(board, row, col)) {
+                    board[row][col] = player; // Simulate placing the mark
+                    int countX[5], countO[5];
+                    scoreBoard(board, countX, countO);
+                    bool hasTwoEmpties = false;
+
+                    if (player == 'X' && 
+                        ((col > 1 && board[row][col - 1] == ' ') || // Check left
+                        (col < SIZE - 2 && board[row][col + 1] == ' ') || // Check right
+                        (row > 1 && board[row - 1][col] == ' ') || // Check up
+                        (row < SIZE - 2 && board[row + 1][col] == ' '))) { // Check down
+                        hasTwoEmpties = true;
+                    } else if (player == 'O' &&
+                            ((col > 1 && board[row][col - 1] == ' ') || // Check left
+                                (col < SIZE - 2 && board[row][col + 1] == ' ') || // Check right
+                                (row > 1 && board[row - 1][col] == ' ') || // Check up
+                                (row < SIZE - 2 && board[row + 1][col] == ' '))) { // Check down
+                        hasTwoEmpties = true;
+                    }
+
+                    if (hasTwoEmpties) {
+                        *x = row;
+                        *y = col;
+                        printf("\nLast move x: %d, y: %d\n", *x, *y);
+                        board[row][col] = ' '; // Undo the simulation
+                        return;
+                    }
+                    board[row][col] = ' '; // Undo the simulation
+                }
+            }
+        }
+    }
+
 
 
     //int total_x, total_o;  
