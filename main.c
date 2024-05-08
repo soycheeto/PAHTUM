@@ -46,29 +46,32 @@ void playMove(char board[SIZE][SIZE], char player, int *x, int *y) {
     int row, col;
     int countX[5], countO[5];
     scoreBoard(board, countX, countO);
+    //THIS FUNCTION WILL BE USED TO TRIGGER THE FIRST IF CONDITION WHERE IF COUNTX[0]<=COUNTO[0]: FULL OFFENSE  
     if(countX[0]<=countO[0]){
             //offense
-       }
-
-    int total_x, total_o;
-    
-    void count_x_and_o(char board[][SIZE], int *total_x, int *total_o) {
-        *total_x = 0;
-        *total_o = 0;
-    
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (board[i][j] == 'X') {
-                    (*total_x)++;
-                    } else if (board[i][j] == 'O') {
-                    (*total_o)++;
-                }
-            }
-        }
     }
-    count_x_and_o(board, &total_x, &total_o);
 
-    int count_empty_cells(char board[][3], int size) {
+
+
+    //int total_x, total_o;  
+    // void count_x_and_o(char board[][SIZE], int *total_x, int *total_o) {
+    //     *total_x = 0;
+    //     *total_o = 0;
+    
+    //     for (int i = 0; i < SIZE; i++) {
+    //         for (int j = 0; j < SIZE; j++) {
+    //             if (board[i][j] == 'X') {
+    //                 (*total_x)++;
+    //                 } else if (board[i][j] == 'O') {
+    //                 (*total_o)++;
+    //             }
+    //         }
+    //     }
+    // }
+    // count_x_and_o(board, &total_x, &total_o);
+
+    //THIS FUNCTION RETURN VAL WILL BE USED TO TRIGGER THE SECOND IF CONDITION WHERE IF TOTAL EMPTY CELLS IS 10 (ARBITRARY NO.),: FULL OFFENSE
+    int count_empty_cells(char board[][SIZE], int size) {
     int total_empty = 0;
     
     for (int i = 0; i < size; i++) {
